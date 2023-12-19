@@ -1,0 +1,100 @@
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
+import time
+from Levenshtein import distance as lev
+
+
+start_time = time.time()
+a = fuzz.ratio('Привет', 'Привет')
+end_time = time.time()
+elapsed_time = end_time - start_time
+print('Самое обычное сравнение:', a, lev('Привет', 'Привет'), 'Elapsed time: ', elapsed_time)
+#Выводит в консоль: 100
+
+start_time = time.time()
+a = fuzz.ratio('Привет', 'Привт')
+end_time = time.time()
+elapsed_time = end_time - start_time
+print('Самое обычное сравнение 2:', a, lev('Привет', 'Привт'), 'Elapsed time: ', elapsed_time)
+#Выводит в консоль: 84
+
+start_time = time.time()
+a = fuzz.partial_ratio('Привет', 'Привет!')
+end_time = time.time()
+elapsed_time = end_time - start_time
+print('Частичное сравнение:', a, lev('Привет', 'Привет!'), 'Elapsed time: ', elapsed_time)
+#Выводит в консоль: 100
+
+start_time = time.time()
+a = fuzz.partial_ratio('Привет', 'Люблю колбасу, Привет')
+end_time = time.time()
+elapsed_time = end_time - start_time
+print('Частичное сравнение 2:', a, lev('Привет', 'Люблю колбасу, Привет'), 'Elapsed time: ', elapsed_time)
+#Выводит в консоль: 100
+
+start_time = time.time()
+a = fuzz.partial_ratio('Привет', 'Люблю колбасу, привет')
+end_time = time.time()
+elapsed_time = end_time - start_time
+print('Частичное сравнение 3:', a, lev('Привет', 'Люблю колбасу, привет'), 'Elapsed time: ', elapsed_time)
+#Выводит в консоль: 90
+
+start_time = time.time()
+a = fuzz.token_sort_ratio('Привет мир', 'мир Привет')
+end_time = time.time()
+elapsed_time = end_time - start_time
+print('Сравнение по токену Token Sort Ratio:', a, lev('Привет мир', 'мир Привет'), 'Elapsed time: ', elapsed_time)
+#Выводит в консоль: 100
+
+start_time = time.time()
+a = fuzz.token_sort_ratio('Привет мир', 'мир наш Привет')
+end_time = time.time()
+elapsed_time = end_time - start_time
+print('Сравнение по токену Token Sort Ratio 2:', a, lev('Привет мир', 'мир наш Привет'), 'Elapsed time: ', elapsed_time)
+#Выводит в консоль: 78
+
+start_time = time.time()
+a = fuzz.token_sort_ratio('1 2 Привет', '1 2 ПриВЕт')
+end_time = time.time()
+elapsed_time = end_time - start_time
+print('Сравнение по токену Token Sort Ratio 3:', a, lev('1 2 Привет', '1 2 ПриВЕт'), 'Elapsed time: ', elapsed_time)
+#Выводит в консоль: 100
+
+start_time = time.time()
+a = fuzz.token_set_ratio('Привет мир', 'мир мир ПриВЕт')
+end_time = time.time()
+elapsed_time = end_time - start_time
+print('Сравнение по токену Token Set Ratio:', a, lev('Привет мир', 'мир мир ПриВЕт'), 'Elapsed time: ', elapsed_time)
+#Выводит в консоль: 100
+
+start_time = time.time()
+a = fuzz.WRatio('Привет мир', '!ПриВЕт мир!')
+end_time = time.time()
+elapsed_time = end_time - start_time
+print('Продвинутое обычное сравнение:', a, lev('Привет мир', '!ПриВЕт мир!'), 'Elapsed time: ', elapsed_time)
+#Выводит в консоль: 100
+
+start_time = time.time()
+a = fuzz.WRatio('Привет мир', '!ПриВЕт, мир!')
+end_time = time.time()
+elapsed_time = end_time - start_time
+print('Продвинутое обычное сравнение 2:', a, lev('Привет мир', '!ПриВЕт, мир!'), 'Elapsed time: ', elapsed_time)
+#Выводит в консоль: 97
+
+start_time = time.time()
+city = ["Москва", "Санкт-Петербург", "Саратов", "Краснодар", "Воронеж", "Омск", "Екатеринбург", "Орск", "Красногорск", "Красноярск", "Самара"]
+a = process.extract("Саратов", city, limit=2)
+# Параметр limit по умолчанию имеет значение 5
+end_time = time.time()
+elapsed_time = end_time - start_time
+print('Работа со списком process:', a, 'Elapsed time: ', elapsed_time)
+#Выводит в консоль: [('Саратов', 100), ('Самара', 62)]
+
+start_time = time.time()
+city = ["Москва", "Санкт-Петербург", "Саратов", "Краснодар", "Воронеж", "Омск", "Екатеринбург", "Орск", "Красногорск", "Красноярск", "Самара"]
+a = process.extractOne("Краногрск", city)
+end_time = time.time()
+elapsed_time = end_time - start_time
+print('Работа со списком extractOne:', a, 'Elapsed time: ', elapsed_time)
+#Выводит в консоль: ('Красногорск', 90)
+
