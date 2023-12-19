@@ -1,0 +1,42 @@
+import time
+import matplotlib.pyplot as plt
+
+
+def tribonacciNumberRecursive(n):
+    if n == 1 or n == 2:
+        return 0
+    if n == 3:
+        return 1
+    return tribonacciNumberRecursive(n - 1) + tribonacciNumberRecursive(n - 2) + tribonacciNumberRecursive(n - 3)
+
+
+tribonacciNumbersCache = [0, 0, 1]
+for i in range(3, 100):
+    tribonacciNumbersCache.append(
+        tribonacciNumbersCache[i - 1] + tribonacciNumbersCache[i - 2] + tribonacciNumbersCache[i - 3])
+
+
+def timee(fun, num):
+    times = []
+    results = []
+    for i in num:
+        start_time = time.time()
+        result = fun(i)
+        end_time = time.time()
+        times.append(end_time - start_time)
+        results.append(result)
+    return results, times
+
+
+z = [5, 10, 15, 25, 30]
+recursive_results, recursive_time = timee(tribonacciNumberRecursive, z)
+cache_results, cache_time = timee(lambda n: tribonacciNumbersCache[n - 1], z)
+
+plt.figure(figsize=(10, 10))
+plt.plot(z, recursive_time, label="Рекурсия")
+plt.plot(z, cache_time, label="Кэширование")
+plt.xlabel("Запросы")
+plt.ylabel("Время выполнения (секунды)")
+plt.legend()
+plt.title("Время выполнения")
+plt.show()
