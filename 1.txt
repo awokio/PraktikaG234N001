@@ -1,0 +1,14 @@
+tribonacciNumbersCache = [0, 0, 1]
+for i in range(3, 100):
+    tribonacciNumbersCache.append(
+        tribonacciNumbersCache[i - 1] + tribonacciNumbersCache[i - 2] + tribonacciNumbersCache[i - 3])
+
+tribonacciNumbers = []
+n = int(input("Введите количество чисел в массиве: "))
+for i in range(n):
+    tribonacciNumbers.append(int(input("Введите число: ")))
+
+tribonacciNumbersValue = []
+for number in tribonacciNumbers:
+    tribonacciNumbersValue.append(tribonacciNumbersCache[number - 1])
+print(tribonacciNumbersValue)
